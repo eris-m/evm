@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 6.0.2, 2023-04-29T14:29:44. -->
+<!-- Written by QtCreator 6.0.2, 2023-04-29T17:02:27. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -70,6 +70,7 @@
    <valuemap type="QVariantMap" key="AutoTest.CheckStates">
     <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp:custom_test">Checked</value>
     <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp:loading_tests">Checked</value>
+    <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp:string_test">Checked</value>
     <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp:uint16_t_load">Checked</value>
    </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
