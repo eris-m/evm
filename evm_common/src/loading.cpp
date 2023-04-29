@@ -31,28 +31,30 @@ template <>
 uint64_t
 basic_size<std::string> (const uint8_t *buffer)
 {
-  return basic_load<uint64_t> (buffer);
+  return basic_load<uint64_t> (buffer) + basic_size<uint64_t> ();
 }
 
 template <>
 uint64_t
 basic_size<std::string_view> (const uint8_t *buffer)
 {
-  return basic_load<uint64_t> (buffer);
+  return basic_load<uint64_t> (buffer) + basic_size<uint64_t> ();
 }
 
 template <>
 uint64_t
 basic_size<std::string> (const std::string &str)
 {
-  return str.length ();
+  auto len = str.length ();
+  return len + basic_size<uint64_t> ();
 }
 
 template <>
 uint64_t
 basic_size<std::string_view> (const std::string_view &str)
 {
-  return str.length ();
+  auto len = str.length ();
+  return len + basic_size<uint64_t> ();
 }
 
 template <typename T>
@@ -73,7 +75,7 @@ template <>
 std::string
 basic_load<std::string> (const uint8_t *buff)
 {
-  auto size = basic_size<std::string> (buff);
+  auto size = basic_size<std::string> (buff) - 8;
   buff += basic_size<uint64_t> ();
 
   std::string str;
@@ -110,7 +112,7 @@ template <typename S>
 static void
 str_save (const S &value, uint8_t *buff)
 {
-  auto size = basic_size<std::string> (value);
+  auto size = basic_size<std::string> (value) - 8;
 
   // write size
   basic_save<uint64_t> (size, buff);
