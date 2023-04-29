@@ -1,6 +1,9 @@
 #define EVM_INTERNAL
 #include <evm/loading.h>
 
+namespace evm
+{
+
 template <typename T, typename A>
 static uint64_t
 basic_size (const A)
@@ -33,8 +36,8 @@ basic_save (const T &value, uint8_t *buff)
 }
 
 template <typename T>
-evm::ls_info<T>
-evm::primitive_ls_info ()
+ls_info<T>
+primitive_ls_info ()
 {
   return evm::ls_info<T>{
     .load_size = basic_size<T>,
@@ -44,9 +47,7 @@ evm::primitive_ls_info ()
   };
 }
 
-
-
-#define PRIMITIVE_LS_INFO(T) template evm::ls_info<T> evm::primitive_ls_info<T> ()
+#define PRIMITIVE_LS_INFO(T) template ls_info<T> primitive_ls_info<T> ()
 
 PRIMITIVE_LS_INFO (uint8_t);
 PRIMITIVE_LS_INFO (uint16_t);
@@ -58,3 +59,5 @@ PRIMITIVE_LS_INFO (int32_t);
 PRIMITIVE_LS_INFO (int64_t);
 PRIMITIVE_LS_INFO (float);
 PRIMITIVE_LS_INFO (double);
+
+} // evm
