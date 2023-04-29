@@ -9,6 +9,10 @@
 namespace evm
 {
 
+template <typename T, typename A> static uint64_t basic_size (const A);
+template <typename T> static T basic_load (const uint8_t *);
+template <typename T> static uint64_t basic_save (const T &, const uint8_t *);
+
 template <typename T>
 static uint64_t
 basic_size ()
@@ -18,9 +22,37 @@ basic_size ()
 
 template <typename T, typename A>
 static uint64_t
-basic_size (const A)
+basic_size (A)
 {
   return basic_size<T> ();
+}
+
+template <>
+uint64_t
+basic_size<std::string> (const uint8_t *buffer)
+{
+  return basic_load<uint64_t> (buffer);
+}
+
+template <>
+uint64_t
+basic_size<std::string_view> (const uint8_t *buffer)
+{
+  return basic_load<uint64_t> (buffer);
+}
+
+template <>
+uint64_t
+basic_size<std::string> (const std::string &str)
+{
+  return str.length ();
+}
+
+template <>
+uint64_t
+basic_size<std::string_view> (const std::string_view &str)
+{
+  return str.length ();
 }
 
 template <typename T>
@@ -37,6 +69,33 @@ basic_load (const uint8_t *buff)
   return output;
 }
 
+template <>
+std::string
+basic_load<std::string> (const uint8_t *buff)
+{
+  auto size = basic_size<std::string> (buff);
+  buff += basic_size<uint64_t> ();
+
+  std::string str;
+  str.reserve (size);
+
+  for (uint64_t i = 0; i < size; i++)
+    {
+      auto *character = reinterpret_cast<const char *> (&buff[i]);
+      str.append (character, 1);
+    }
+
+  return str;
+}
+
+template <>
+std::string_view
+basic_load<std::string_view> (const uint8_t *buff)
+{
+  throw std::runtime_error (
+      "Tried to load std::string_view from memory (which is not supported).");
+}
+
 template <typename T>
 static void
 basic_save (const T &value, uint8_t *buff)
@@ -47,55 +106,33 @@ basic_save (const T &value, uint8_t *buff)
     buff[i] = bytes[i];
 }
 
-static uint64_t
-string_load_size (const uint8_t *buffer)
-{
-  return basic_load<uint64_t> (buffer);
-}
-
-template <typename S>
-static uint64_t
-string_save_size (const S &s)
-{
-  return s.length ();
-}
-
-static std::string
-string_load (const uint8_t *buffer)
-{
-  auto size = string_load_size (buffer);
-  buffer += basic_size<uint64_t> ();
-
-  std::string str;
-  str.reserve (size);
-
-  for (uint64_t i = 0; i < size; i++)
-    {
-      auto *character = reinterpret_cast<const char *>(&buffer[i]);
-      str.append (character, 1);
-    }
-
-  return str;
-}
-
-static std::string_view
-string_view_load (const uint8_t *)
-{
-  throw std::runtime_error (
-      "Tried to load std::string_view from memory (which is not supported).");
-}
-
 template <typename S>
 static void
-string_save (const S &s, uint8_t *buffer)
+str_save (const S &value, uint8_t *buff)
 {
-  auto size = string_save_size (s);
+  auto size = basic_size<std::string> (value);
 
-  basic_save<uint64_t> (size, buffer);
-  buffer += 8;
+  // write size
+  basic_save<uint64_t> (size, buff);
+  buff += 8;
 
+  // write bytes
   for (uint64_t i = 0; i < size; i++)
-    buffer[i] = static_cast<uint8_t> (s[i]);
+    buff[i] = static_cast<uint8_t> (value[i]);
+}
+
+template <>
+void
+basic_save<std::string> (const std::string &value, uint8_t *buff)
+{
+  str_save<std::string> (value, buff);
+}
+
+template <>
+void
+basic_save<std::string_view> (const std::string_view &value, uint8_t *buff)
+{
+  str_save<std::string_view> (value, buff);
 }
 
 template <typename T>
@@ -110,27 +147,6 @@ primitive_ls_info ()
   };
 }
 
-template <>
-ls_info<std::string>
-primitive_ls_info<std::string> ()
-{
-  return ls_info<std::string>{ .load_size = string_load_size,
-                               .save_size = string_save_size<std::string>,
-                               .load = string_load,
-                               .save = string_save<std::string> };
-}
-
-template <>
-ls_info<std::string_view>
-primitive_ls_info<std::string_view> ()
-{
-  return ls_info<std::string_view>{ .load_size = string_load_size,
-                                    .save_size
-                                    = string_save_size<std::string_view>,
-                                    .load = string_view_load,
-                                    .save = string_save<std::string_view> };
-}
-
 #define PRIMITIVE_LS_INFO(T) template ls_info<T> primitive_ls_info<T> ()
 
 PRIMITIVE_LS_INFO (uint8_t);
@@ -143,5 +159,8 @@ PRIMITIVE_LS_INFO (int32_t);
 PRIMITIVE_LS_INFO (int64_t);
 PRIMITIVE_LS_INFO (float);
 PRIMITIVE_LS_INFO (double);
+
+PRIMITIVE_LS_INFO (std::string);
+PRIMITIVE_LS_INFO (std::string_view);
 
 } // evm
