@@ -71,3 +71,18 @@ TEST (loading_tests, custom_test)
 
   EXPECT_EQ (value_loaded.x, value.x + 1);
 }
+
+TEST (loading_tests, string_test)
+{
+  const auto str_view_info = evm::primitive_ls_info<std::string_view> ();
+  const auto str_info = evm::primitive_ls_info<std::string> ();
+
+  std::string_view str = "hi!";
+  uint8_t buffer[128];
+
+  str_view_info.save (str, buffer);
+
+  std::string str_loaded = str_info.load (buffer);
+
+  EXPECT_STREQ (str_loaded.data (), str.data ());
+}
