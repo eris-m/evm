@@ -46,8 +46,10 @@ union instruction_args
 
   static instruction_args load (instruction_kind kind, const uint8_t *buff);
   static instruction_args load (opcode opcode, const uint8_t *buff);
-  static void save (const instruction_args &args, instruction_kind kind, uint8_t *buff);
-  static void save (const instruction_args &args, opcode opcode, uint8_t *buff);
+  static void save (const instruction_args &args, instruction_kind kind,
+                    uint8_t *buff);
+  static void save (const instruction_args &args, opcode opcode,
+                    uint8_t *buff);
 };
 
 /**
@@ -63,6 +65,10 @@ struct instruction
    * @brief The arguments of the instruction.
    */
   instruction_args args;
+
+  static instruction load (const uint8_t *buffer);
+  static void save (const instruction &instr, uint8_t *buff);
+  static ls_info<instruction> get_ls_info ();
 };
 
 /**

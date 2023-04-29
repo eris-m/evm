@@ -24,7 +24,8 @@ instruction_args::load (opcode code, const uint8_t *buffer)
 }
 
 void
-instruction_args::save (const instruction_args &args, instruction_kind kind, uint8_t *buffer)
+instruction_args::save (const instruction_args &args, instruction_kind kind,
+                        uint8_t *buffer)
 {
   switch (kind)
     {
@@ -34,9 +35,23 @@ instruction_args::save (const instruction_args &args, instruction_kind kind, uin
 }
 
 void
-instruction_args::save (const instruction_args &args, opcode code, uint8_t *buffer)
+instruction_args::save (const instruction_args &args, opcode code,
+                        uint8_t *buffer)
 {
   save (args, opcode_kind (code), buffer);
+}
+
+instruction
+instruction::load (const uint8_t *buffer)
+{
+  auto opcode = load_opcode (buffer);
+  buffer++;
+  auto args = instruction_args::load (opcode, buffer);
+
+  return instruction{
+    .code = opcode,
+    .args = args,
+  };
 }
 
 static uint64_t
@@ -63,6 +78,17 @@ save_opcode (const opcode &self, uint8_t *buffer)
 {
   auto byte = static_cast<uint8_t> (self);
   buffer[0] = byte;
+}
+
+instruction_kind
+opcode_kind (opcode opcode)
+{
+  switch (opcode)
+    {
+    case opcode::nop:
+      return instruction_kind::lonely;
+    };
+  return instruction_kind::lonely;
 }
 
 ls_info<opcode>
