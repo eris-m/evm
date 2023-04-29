@@ -1,0 +1,91 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "evm_common/libevm_common_shared.so"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"evm_common/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 14,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 15,
+				"parent" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "evm_common_obj::@d22f64785547d2502faa"
+		}
+	],
+	"id" : "evm_common_shared::@d22f64785547d2502faa",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "",
+				"role" : "flags"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "evm_common_shared",
+	"nameOnDisk" : "libevm_common_shared.so",
+	"paths" : 
+	{
+		"build" : "evm_common",
+		"source" : "evm_common"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Object Libraries",
+			"sourceIndexes" : 
+			[
+				0,
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "/home/bastian/Projects/evm/build/evm_common/CMakeFiles/evm_common_obj.dir/src/instruction.cpp.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "/home/bastian/Projects/evm/build/evm_common/CMakeFiles/evm_common_obj.dir/src/loading.cpp.o",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

@@ -1,0 +1,5 @@
+if(EXISTS "/home/bastian/Projects/evm/build/tests/loading_test[1]_tests.cmake")
+  include("/home/bastian/Projects/evm/build/tests/loading_test[1]_tests.cmake")
+else()
+  add_test(loading_test_NOT_BUILT loading_test_NOT_BUILT)
+endif()

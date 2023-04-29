@@ -1,0 +1,37 @@
+[
+{
+  "directory": "/home/bastian/Projects/evm/build",
+  "command": "/usr/bin/c++ -I/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/evm_common/inc -g -fPIC -std=gnu++20 -o evm_common/CMakeFiles/evm_common_obj.dir/src/instruction.cpp.o -c /mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/evm_common/src/instruction.cpp",
+  "file": "/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/evm_common/src/instruction.cpp"
+},
+{
+  "directory": "/home/bastian/Projects/evm/build",
+  "command": "/usr/bin/c++ -I/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/evm_common/inc -g -fPIC -std=gnu++20 -o evm_common/CMakeFiles/evm_common_obj.dir/src/loading.cpp.o -c /mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/evm_common/src/loading.cpp",
+  "file": "/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/evm_common/src/loading.cpp"
+},
+{
+  "directory": "/home/bastian/Projects/evm/build",
+  "command": "/usr/bin/c++ -I/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/evm_common/inc -isystem /home/bastian/Projects/evm/build/_deps/googletest-src/googletest/include -isystem /home/bastian/Projects/evm/build/_deps/googletest-src/googletest -g -std=gnu++20 -o tests/CMakeFiles/loading_test.dir/loading_test.cpp.o -c /mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp",
+  "file": "/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp"
+},
+{
+  "directory": "/home/bastian/Projects/evm/build",
+  "command": "/usr/bin/c++ -I/home/bastian/Projects/evm/build/_deps/googletest-src/googlemock/include -I/home/bastian/Projects/evm/build/_deps/googletest-src/googlemock -isystem /home/bastian/Projects/evm/build/_deps/googletest-src/googletest/include -isystem /home/bastian/Projects/evm/build/_deps/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++20 -o _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/bastian/Projects/evm/build/_deps/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/home/bastian/Projects/evm/build/_deps/googletest-src/googlemock/src/gmock-all.cc"
+},
+{
+  "directory": "/home/bastian/Projects/evm/build",
+  "command": "/usr/bin/c++ -isystem /home/bastian/Projects/evm/build/_deps/googletest-src/googlemock/include -isystem /home/bastian/Projects/evm/build/_deps/googletest-src/googlemock -isystem /home/bastian/Projects/evm/build/_deps/googletest-src/googletest/include -isystem /home/bastian/Projects/evm/build/_deps/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++20 -o _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/bastian/Projects/evm/build/_deps/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/home/bastian/Projects/evm/build/_deps/googletest-src/googlemock/src/gmock_main.cc"
+},
+{
+  "directory": "/home/bastian/Projects/evm/build",
+  "command": "/usr/bin/c++ -I/home/bastian/Projects/evm/build/_deps/googletest-src/googletest/include -I/home/bastian/Projects/evm/build/_deps/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++20 -o _deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/bastian/Projects/evm/build/_deps/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/home/bastian/Projects/evm/build/_deps/googletest-src/googletest/src/gtest-all.cc"
+},
+{
+  "directory": "/home/bastian/Projects/evm/build",
+  "command": "/usr/bin/c++ -isystem /home/bastian/Projects/evm/build/_deps/googletest-src/googletest/include -isystem /home/bastian/Projects/evm/build/_deps/googletest-src/googletest -g -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++20 -o _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/bastian/Projects/evm/build/_deps/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/home/bastian/Projects/evm/build/_deps/googletest-src/googletest/src/gtest_main.cc"
+}
+]

@@ -1,0 +1,4 @@
+# ninja log v5
+0	27	1682735166378733006	evm_common/CMakeFiles/evm_common_obj.dir/src/loading.cpp.o	f78795c8832ccaa9
+0	157	1682735359813920863	build.ninja	627f0ccde062c7c1
+0	32	1682735166386732973	evm_common/CMakeFiles/evm_common_obj.dir/src/instruction.cpp.o	55e7d9b6f69f7517
