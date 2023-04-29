@@ -45,7 +45,9 @@ union instruction_args
   } lonely;
 
   static instruction_args load (instruction_kind kind, const uint8_t *buff);
+  static instruction_args load (opcode opcode, const uint8_t *buff);
   static void save (const instruction_args &args, instruction_kind kind, uint8_t *buff);
+  static void save (const instruction_args &args, opcode opcode, uint8_t *buff);
 };
 
 /**

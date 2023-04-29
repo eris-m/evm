@@ -17,14 +17,26 @@ instruction_args::load (instruction_kind kind, const uint8_t *buffer)
   return args;
 }
 
+instruction_args
+instruction_args::load (opcode code, const uint8_t *buffer)
+{
+  return load (opcode_kind (code), buffer);
+}
+
 void
-instruction_args::save(const instruction_args &args, instruction_kind kind, uint8_t *buffer)
+instruction_args::save (const instruction_args &args, instruction_kind kind, uint8_t *buffer)
 {
   switch (kind)
     {
     case instruction_kind::lonely:
       return;
     }
+}
+
+void
+instruction_args::save (const instruction_args &args, opcode code, uint8_t *buffer)
+{
+  save (args, opcode_kind (code), buffer);
 }
 
 static uint64_t
