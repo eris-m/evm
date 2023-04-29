@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_library(evm_common_obj OBJECT 
 	inc/evm/instruction.h src/instruction.cpp
-	inc/evm/loading.h src/loading.cpp)
+        inc/evm/loading.h src/loading.cpp
+        inc/evm/primitive.h src/primitive.cpp)
 target_include_directories(evm_common_obj PUBLIC inc/)
 
 set_property(TARGET evm_common_obj PROPERTY POSITION_INDEPENDENT_CODE ON)

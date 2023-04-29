@@ -16,8 +16,12 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 enable_testing()
+
 add_executable(loading_test loading_test.cpp)
 target_link_libraries(loading_test evm_common_shared GTest::gtest_main)
 
+add_executable(primitive_tests primitive_tests.cpp)
+target_link_libraries(primitive_tests evm_common_shared GTest::gtest_main)
+
 include(GoogleTest)
-gtest_discover_tests(loading_test)
+gtest_discover_tests(loading_test primitive_tests)
