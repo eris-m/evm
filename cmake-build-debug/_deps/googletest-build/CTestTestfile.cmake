@@ -1,7 +1,0 @@
-# CMake generated Testfile for 
-# Source directory: /mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/cmake-build-debug/_deps/googletest-src
-# Build directory: /mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/cmake-build-debug/_deps/googletest-build
-# 
-# This file includes the relevant testing commands required for 
-# testing this directory and lists subdirectories to be tested as well.
-subdirs("googlemock")

@@ -1,3 +1,0 @@
-ToolSet: 1.0 (local)Options: 
-
-Options:-DCMAKE_MAKE_PROGRAM=/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Programs/clion-2023.1.1/bin/ninja/linux/x64/ninja

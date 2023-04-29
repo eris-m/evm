@@ -1,5 +1,0 @@
-add_test( loading_tests.uint16_t_load /home/bastian/Projects/evm/build/tests/loading_test [==[--gtest_filter=loading_tests.uint16_t_load]==] --gtest_also_run_disabled_tests)
-set_tests_properties( loading_tests.uint16_t_load PROPERTIES WORKING_DIRECTORY /home/bastian/Projects/evm/build/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test( loading_tests.custom_test /home/bastian/Projects/evm/build/tests/loading_test [==[--gtest_filter=loading_tests.custom_test]==] --gtest_also_run_disabled_tests)
-set_tests_properties( loading_tests.custom_test PROPERTIES WORKING_DIRECTORY /home/bastian/Projects/evm/build/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-set( loading_test_TESTS loading_tests.uint16_t_load loading_tests.custom_test)
