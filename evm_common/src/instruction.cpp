@@ -3,6 +3,30 @@
 namespace evm
 {
 
+instruction_args
+instruction_args::load (instruction_kind kind, const uint8_t *buffer)
+{
+  instruction_args args;
+
+  switch (kind)
+    {
+    case instruction_kind::lonely:
+      args.lonely = {};
+    }
+
+  return args;
+}
+
+void
+instruction_args::save(const instruction_args &args, instruction_kind kind, uint8_t *buffer)
+{
+  switch (kind)
+    {
+    case instruction_kind::lonely:
+      return;
+    }
+}
+
 static uint64_t
 opcode_ld_size (const uint8_t *)
 {

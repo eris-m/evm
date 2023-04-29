@@ -20,7 +20,8 @@ enum class opcode : uint8_t
 };
 
 /**
- * @brief The different 'kinds' of instructions, organised by the arguments they take.
+ * @brief The different 'kinds' of instructions, organised by the arguments
+ * they take.
  */
 enum class instruction_kind : uint8_t
 {
@@ -42,6 +43,9 @@ union instruction_args
   struct
   {
   } lonely;
+
+  static instruction_args load (instruction_kind kind, const uint8_t *buff);
+  static void save (const instruction_args &args, instruction_kind kind, uint8_t *buff);
 };
 
 /**
