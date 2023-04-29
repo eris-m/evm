@@ -70,7 +70,10 @@ string_load (const uint8_t *buffer)
   str.reserve (size);
 
   for (uint64_t i = 0; i < size; i++)
-    str[i] = static_cast<char> (buffer[i]);
+    {
+      auto *character = reinterpret_cast<const char *>(&buffer[i]);
+      str.append (character, 1);
+    }
 
   return str;
 }
@@ -86,7 +89,12 @@ template <typename S>
 static void
 string_save (const S &s, uint8_t *buffer)
 {
-  for (uint64_t i = 0; i < string_save_size (s); i++)
+  auto size = string_save_size (s);
+
+  basic_save<uint64_t> (size, buffer);
+  buffer += 8;
+
+  for (uint64_t i = 0; i < size; i++)
     buffer[i] = static_cast<uint8_t> (s[i]);
 }
 
