@@ -6,7 +6,7 @@ TEST (loading_tests, uint16_t_load)
   constexpr uint8_t data[] = { 0x00, 0x01 }; // Should be 256
   constexpr auto expected = 256;
 
-  auto u16_ls_info = evm::primitive_ls_info<uint16_t> ();
+  auto u16_ls_info = evm::value_ls_info<uint16_t> ();
   auto u16_value = u16_ls_info.load (data);
 
   EXPECT_EQ (u16_value, expected);
@@ -46,14 +46,14 @@ private:
   static custom_loader_t
   load (const uint8_t *buffer)
   {
-    int x = evm::primitive_ls_info<int> ().load (buffer);
+    int x = evm::value_ls_info<int> ().load (buffer);
     return custom_loader_t{ .x = x + 1 };
   }
 
   static void
   save (const custom_loader_t &self, uint8_t *buffer)
   {
-    evm::primitive_ls_info<int> ().save (self.x, buffer);
+    evm::value_ls_info<int> ().save (self.x, buffer);
   }
 };
 
@@ -74,8 +74,8 @@ TEST (loading_tests, custom_test)
 
 TEST (loading_tests, string_test)
 {
-  const auto str_view_info = evm::primitive_ls_info<std::string_view> ();
-  const auto str_info = evm::primitive_ls_info<std::string> ();
+  const auto str_view_info = evm::value_ls_info<std::string_view> ();
+  const auto str_info = evm::value_ls_info<std::string> ();
 
   std::string_view str = "hi!";
   uint8_t buffer[128];
