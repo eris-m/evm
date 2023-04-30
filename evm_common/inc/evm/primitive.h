@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <optional>
 #include <variant>
+#include <string_view>
 
 namespace evm
 {
@@ -103,6 +104,11 @@ uint64_t primitive_load_size (const uint8_t *buffer);
  * @brief The size needed to save the given primitive into a buffer.
  */
 uint64_t primitive_save_size (primitive_value value);
+
+/**
+ * @brief Gets the type name of the type.
+ */
+const std::string_view primitive_type_name (primitive_type t);
 
 }
 

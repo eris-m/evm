@@ -152,6 +152,20 @@ primitive_save_size (primitive_value value)
   return primitive_load_size (type, nullptr);
 }
 
+const std::string_view
+primitive_type_name (primitive_type t)
+{
+#define CASE_OF(T) case T: return #T;
+
+  switch (t)
+    {
+    INSTANCE_MACRO(CASE_OF);
+    default: return "";
+    }
+
+#undef CASE_OF
+}
+
 // Instance generic functions for all values possible values.
 #define PRIM_INST(TY)                                                         \
   template std::optional<primitive_value_t<TY>> get_primitive<TY> (           \
