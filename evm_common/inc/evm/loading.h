@@ -41,7 +41,7 @@ template <typename T> struct ls_info
  * This includes numeric types (such as int64_t) for now.
  * @return @c ls_info for the primitive.
  */
-template <typename T> ls_info<T> primitive_ls_info ();
+template <typename T> ls_info<T> value_ls_info ();
 
 
 } // evm

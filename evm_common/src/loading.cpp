@@ -139,7 +139,7 @@ basic_save<std::string_view> (const std::string_view &value, uint8_t *buff)
 
 template <typename T>
 ls_info<T>
-primitive_ls_info ()
+value_ls_info ()
 {
   return ls_info<T>{
     .load_size = basic_size<T>,
@@ -149,7 +149,7 @@ primitive_ls_info ()
   };
 }
 
-#define PRIMITIVE_LS_INFO(T) template ls_info<T> primitive_ls_info<T> ()
+#define PRIMITIVE_LS_INFO(T) template ls_info<T> value_ls_info<T> ()
 
 PRIMITIVE_LS_INFO (uint8_t);
 PRIMITIVE_LS_INFO (uint16_t);
