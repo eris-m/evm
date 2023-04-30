@@ -99,7 +99,7 @@ save_type (primitive_type type, uint8_t *buffer)
 }
 
 void
-save_primitive (primitive_value value, uint8_t *buffer, bool fat)
+save_primitive (const primitive_value &value, uint8_t *buffer, bool fat)
 {
   // Function to save value.
   auto save_value = [buffer] (auto v) {
@@ -145,7 +145,7 @@ primitive_load_size (const uint8_t *buffer)
 }
 
 uint64_t
-primitive_save_size (primitive_value value)
+primitive_save_size (const primitive_value &value)
 {
   auto type = primitive_get_type (value);
   // passing in nullptr is fine, primitive_load_size doesn't use it.

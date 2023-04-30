@@ -88,7 +88,7 @@ primitive_value load_primitive (const uint8_t *buffer);
  * @param fat Whether or not the primitive should be a fat primitive,
  * ie one that saves a type specifying byte along with the value.
  */
-void save_primitive (primitive_value value, uint8_t *buffer, bool fat = false);
+void save_primitive (const primitive_value &value, uint8_t *buffer, bool fat = false);
 
 /**
  * @brief The size needed to load a primitive of type @c type.
@@ -103,7 +103,7 @@ uint64_t primitive_load_size (const uint8_t *buffer);
 /**
  * @brief The size needed to save the given primitive into a buffer.
  */
-uint64_t primitive_save_size (primitive_value value);
+uint64_t primitive_save_size (const primitive_value &value);
 
 /**
  * @brief Gets the type name of the type.
