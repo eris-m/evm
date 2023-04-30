@@ -89,9 +89,9 @@ primitive_value load_primitive (const uint8_t *buffer);
  */
 void save_primitive (primitive_value value, uint8_t *buffer, bool fat = false);
 
-//uint64_t primitive_load_size (primitive_type type, const uint8_t *buffer);
-//uint64_t primitive_load_size (const uint8_t *buffer);
-//uint64_t primitive_save_size (primitive_value value);
+uint64_t primitive_load_size (primitive_type type, const uint8_t *buffer);
+uint64_t primitive_load_size (const uint8_t *buffer);
+uint64_t primitive_save_size (primitive_value value);
 
 }
 

@@ -7,6 +7,21 @@
 namespace evm
 {
 
+/**
+ * @brief Macro to instance the provided macro @c M for all primitive types
+ */
+#define INSTANCE_MACRO(M)                                                     \
+  M (I8_TYPE);                                                                \
+  M (I16_TYPE);                                                               \
+  M (I32_TYPE);                                                               \
+  M (I64_TYPE);                                                               \
+  M (U8_TYPE);                                                                \
+  M (U16_TYPE);                                                               \
+  M (U32_TYPE);                                                               \
+  M (U64_TYPE);                                                               \
+  M (F32_TYPE);                                                               \
+  M (F64_TYPE);
+
 template <primitive_type TY>
 std::optional<primitive_value_t<TY>>
 get_primitive (primitive_value value)
@@ -53,16 +68,7 @@ load_primitive (primitive_type type, const uint8_t *buffer)
     return load_primitive_raw<V> (buffer)
   switch (type)
     {
-      CASE_OF (I8_TYPE);
-      CASE_OF (I16_TYPE);
-      CASE_OF (I32_TYPE);
-      CASE_OF (I64_TYPE);
-      CASE_OF (U8_TYPE);
-      CASE_OF (U16_TYPE);
-      CASE_OF (U32_TYPE);
-      CASE_OF (U64_TYPE);
-      CASE_OF (F32_TYPE);
-      CASE_OF (F64_TYPE);
+      INSTANCE_MACRO (CASE_OF);
     default:
       throw std::runtime_error ("Invalid Type Specifier.");
     }
@@ -82,7 +88,8 @@ save_type (primitive_type type, uint8_t *buffer)
   *buffer = static_cast<uint8_t> (type);
 }
 
-void save_value (auto v, uint8_t *buffer)
+void
+save_value (auto v, uint8_t *buffer)
 {
   value_ls_info<typeof (v)> ().save (v, buffer);
 }
@@ -98,9 +105,37 @@ save_primitive (primitive_value value, uint8_t *buffer, bool fat)
       buffer++;
     }
 
-  std::visit (
-      [buffer] (auto v) { save_value (v, buffer); },
-      value);
+  std::visit ([buffer] (auto v) { save_value (v, buffer); }, value);
+}
+
+uint64_t
+primitive_load_size (primitive_type type, const uint8_t *)
+{
+#define CASE_OF(T)                                                            \
+  case T:                                                                     \
+    return sizeof (primitive_value_t<T>)
+
+  switch (type)
+    {
+      INSTANCE_MACRO (CASE_OF);
+    default:
+      throw std::runtime_error ("Invalid Type Specifier.");
+    }
+
+#undef CASE_OF
+}
+uint64_t
+primitive_load_size (const uint8_t *buffer)
+{
+  auto type = load_primitive_type (buffer);
+  return primitive_load_size (type, buffer);
+}
+uint64_t
+primitive_save_size (primitive_value value)
+{
+  auto type = primitive_get_type (value);
+  // passing in nullptr is fine, primitive_load_size doesn't use it.
+  return primitive_load_size (type, nullptr);
 }
 
 // Instance generic functions for all values possible values.
@@ -109,16 +144,5 @@ save_primitive (primitive_value value, uint8_t *buffer, bool fat)
       primitive_value);                                                       \
   template primitive_value make_primitive<TY> (primitive_value_t<TY> value);
 
-PRIM_INST (I8_TYPE);
-PRIM_INST (I16_TYPE);
-PRIM_INST (I32_TYPE);
-PRIM_INST (I64_TYPE);
-
-PRIM_INST (U8_TYPE);
-PRIM_INST (U16_TYPE);
-PRIM_INST (U32_TYPE);
-PRIM_INST (U64_TYPE);
-
-PRIM_INST (F32_TYPE);
-PRIM_INST (F64_TYPE);
+INSTANCE_MACRO (PRIM_INST);
 }
