@@ -7,9 +7,7 @@
 namespace evm
 {
 
-/**
- * @brief Macro to instance the provided macro @c M for all primitive types
- */
+/// @cond IGNORE
 #define INSTANCE_MACRO(M)                                                     \
   M (I8_TYPE);                                                                \
   M (I16_TYPE);                                                               \
@@ -21,6 +19,7 @@ namespace evm
   M (U64_TYPE);                                                               \
   M (F32_TYPE);                                                               \
   M (F64_TYPE);
+/// @endcond
 
 template <primitive_type TY>
 std::optional<primitive_value_t<TY>>
@@ -176,11 +175,14 @@ primitive_type_name (primitive_type t)
 #undef CASE_OF
 }
 
+/// @cond
 // Instance generic functions for all values possible values.
 #define PRIM_INST(TY)                                                         \
   template std::optional<primitive_value_t<TY>> get_primitive<TY> (           \
       primitive_value);                                                       \
   template primitive_value make_primitive<TY> (primitive_value_t<TY> value);
+
+/// @endcond
 
 // Instance generic functions for all values of primitive_type
 INSTANCE_MACRO (PRIM_INST);

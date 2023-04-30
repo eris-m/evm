@@ -1,3 +1,11 @@
+/** @file
+ *
+ * @brief This file contains the logic for primitive types.
+ * It contains loading and saving information (@c evm::load_primitive and @c evm::save_primitive),
+ * type information, and a @c std::variant type for convenience.
+ *
+ */
+
 #ifndef EVM_COMMON_VALUES_H_
 #define EVM_COMMON_VALUES_H_
 
@@ -12,7 +20,8 @@ namespace evm
 /**
  * @brief This enum contains the different types, such as i8 (8-bit signed
  * integer).
- * @details The type names are fairly self explanatory, taking the form @c
+ *
+ * The type names are fairly self explanatory, taking the form @c
  * <prefix><size>_TYPE. A prefix of @c I means a signed integer, @c U an unsigned
  * integer, and @c F a floating point.
  *
@@ -20,22 +29,26 @@ namespace evm
  */
 enum primitive_type : uint8_t
 {
-  I8_TYPE,
-  I16_TYPE,
-  I32_TYPE,
-  I64_TYPE,
-  U8_TYPE,
-  U16_TYPE,
-  U32_TYPE,
-  U64_TYPE,
-  F32_TYPE,
-  F64_TYPE,
+  I8_TYPE, /**< 8-bit signed integer */
+  I16_TYPE, /**< 16-bit signed integer */
+  I32_TYPE, /**< 32-bit signed integer */
+  I64_TYPE, /**< 64-bit signed integer */
+  U8_TYPE, /**< 8-bit unsigned integer */
+  U16_TYPE, /**< 16-bit unsigned integer */
+  U32_TYPE, /**< 32-bit unsigned integer */
+  U64_TYPE, /**< 64-bit unsigned integer */
+  F32_TYPE, /**< 32-bit floating point number */
+  F64_TYPE, /**< 64-bit floating point number */
 };
 
 /**
  * @brief A primitive value.
  * This is a wrapper over the raw types.
- * To get the raw values, see @c get_primitive.
+ *
+ * This value in memory is always 64-bits,
+ * due to limitations of @c std::variant.
+ *
+ * @see evm::get_primitive ().
  */
 using primitive_value
     = std::variant<int8_t, int16_t, int32_t, int64_t, uint8_t, uint16_t,
@@ -44,8 +57,8 @@ using primitive_value
 /**
  * @brief The associated type for the given @c primitive_type.
  *
- * This function is instanciated for each member of @c primitive_type, 
- * and will produce a linker error if you try use an arbitrary integer.
+ * This type is instanciated for each member of @c primitive_type
+ * and **will** produce a linker error if you try use an arbitrary integer.
  */
 template <primitive_type TYPE>
 using primitive_value_t = std::variant_alternative_t<TYPE, primitive_value>;
@@ -56,8 +69,8 @@ using primitive_value_t = std::variant_alternative_t<TYPE, primitive_value>;
  * This function is instanciated for each member of @c primitive_type, 
  * and will produce a linker error if you try use an arbitrary integer.
  *
- * @return An optional with value if the @c primitive_value contains the given
- * type, otherwise @c nullopt.
+ * @return A value if the @c primitive_value contains the given
+ * type, otherwise @c std::nullopt.
  */
 template <primitive_type TYPE>
 std::optional<primitive_value_t<TYPE>> get_primitive (primitive_value value);
@@ -70,15 +83,26 @@ std::optional<primitive_value_t<TYPE>> get_primitive (primitive_value value);
  * and will produce a linker error if you try use an arbitrary integer.
  *
  * @tparam TYPE Type to make.
- * @return
  */
 template <primitive_type TYPE>
 primitive_value make_primitive (primitive_value_t<TYPE> value);
 
+/**
+ * @brief Returns the type of value stored within the primitive_value.
+ *
+ * This function runs in *O(1)* time.
+ */
 primitive_type primitive_get_type (primitive_value val);
 
 /**
  * @brief Loads a primitive value given the type.
+ *
+ * This overload does not load the type information
+ * and if at the buffer address there is a fat primitive value
+ * then you will get incorrect results.
+ * For this reason, if you know that the value at `*buffer` will be
+ * a fat primitive, please pass in `buffer + 1`.
+ *
  * @param type Type of the primitive.
  * @param buffer Buffer to load from.
  */
@@ -86,8 +110,12 @@ primitive_value load_primitive (primitive_type type, const uint8_t *buffer);
 /**
  * @brief Loads a primitive value,
  * using the first byte to determain the type.
+ *
  * The other overload of @c load_primitive should be preferred if the type is
  * known.
+ * This overload loads fat primitives.
+ * This will return incorrect results if there is a thin primitive at `*buffer`.
+ *
  * @param buffer Buffer to load from.
  */
 primitive_value load_primitive (const uint8_t *buffer);
@@ -104,6 +132,10 @@ void save_primitive (const primitive_value &value, uint8_t *buffer,
 
 /**
  * @brief The size needed to load a primitive of type @c type.
+ *
+ * This returns the size without the type as it presumes you want a thin primitive,
+ * see the other overload of this function for fat primitives.
+ *
  * @param type Type of the primitive.
  */
 uint64_t primitive_load_size (primitive_type type, const uint8_t *buffer);
@@ -114,6 +146,8 @@ uint64_t primitive_load_size (primitive_type type, const uint8_t *buffer);
 uint64_t primitive_load_size (const uint8_t *buffer);
 /**
  * @brief The size needed to save the given primitive into a buffer.
+ * @param value Value who's size is calculated.
+ * @param fat Whether or not to use a fat primitive.
  */
 uint64_t primitive_save_size (const primitive_value &value, bool fat = false);
 
