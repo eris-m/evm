@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 6.0.2, 2023-04-30T11:07:02. -->
+<!-- Written by QtCreator 6.0.2, 2023-04-30T12:13:09. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -74,6 +74,7 @@
     <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp:uint16_t_load">Checked</value>
     <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/primitive_tests.cpp:get_set_test">Checked</value>
     <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/primitive_tests.cpp:primitive_tests">Checked</value>
+    <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/primitive_tests.cpp:thin_load_save_test">Checked</value>
    </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
@@ -104,7 +105,7 @@
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{4cf5e296-2384-4672-83e6-0eac409053a9}</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
-   <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
+   <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">1</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
     <value type="QString" key="CMake.Build.Type">Debug</value>
     <value type="QString" key="CMake.Initial.Parameters">-GNinja

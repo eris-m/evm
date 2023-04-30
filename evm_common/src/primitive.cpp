@@ -26,6 +26,7 @@ template <primitive_type TY>
 std::optional<primitive_value_t<TY>>
 get_primitive (primitive_value value)
 {
+  // return nullopt if type is wrong.
   if (value.index () != TY)
     return std::nullopt;
 
@@ -36,7 +37,8 @@ template <primitive_type TYPE>
 primitive_value
 make_primitive (primitive_value_t<TYPE> value)
 {
-  return primitive_value (std::in_place_index_t<TYPE> (), value);
+  auto idx = std::in_place_index_t<TYPE> ();
+  return primitive_value (idx, value);
 }
 
 primitive_type
@@ -49,9 +51,12 @@ template <primitive_type TYPE>
 static primitive_value
 load_primitive_raw (const uint8_t *buffer)
 {
+  // load info.
   auto val_ls_info = value_ls_info<primitive_value_t<TYPE>> ();
+  // load value.
+  auto val = val_ls_info.load (buffer);
 
-  return primitive_value (val_ls_info.load (buffer));
+  return primitive_value (val);
 }
 
 static primitive_type
@@ -66,46 +71,52 @@ load_primitive (primitive_type type, const uint8_t *buffer)
 #define CASE_OF(V)                                                            \
   case V:                                                                     \
     return load_primitive_raw<V> (buffer)
+
   switch (type)
     {
       INSTANCE_MACRO (CASE_OF);
     default:
       throw std::runtime_error ("Invalid Type Specifier.");
     }
+
 #undef CASE_OF
 }
+
 primitive_value
 load_primitive (const uint8_t *buffer)
 {
   auto type = load_primitive_type (buffer);
 
+  // load with explicit type.
   return load_primitive (type, buffer + 1);
 }
 
-void
+static void
 save_type (primitive_type type, uint8_t *buffer)
 {
+  // Only one byte, so it just copies.
   *buffer = static_cast<uint8_t> (type);
-}
-
-void
-save_value (auto v, uint8_t *buffer)
-{
-  value_ls_info<typeof (v)> ().save (v, buffer);
 }
 
 void
 save_primitive (primitive_value value, uint8_t *buffer, bool fat)
 {
+  // Function to save value.
+  auto save_value = [buffer] (auto v) {
+    auto info = value_ls_info<typeof (v)> ();
+    info.save (v, buffer);
+  };
+
   auto type = primitive_get_type (value);
 
+  // save type info if fat.
   if (fat)
     {
       save_type (type, buffer);
       buffer++;
     }
 
-  std::visit ([buffer] (auto v) { save_value (v, buffer); }, value);
+  std::visit (save_value, value);
 }
 
 uint64_t
@@ -117,6 +128,7 @@ primitive_load_size (primitive_type type, const uint8_t *)
 
   switch (type)
     {
+      // all the cases.
       INSTANCE_MACRO (CASE_OF);
     default:
       throw std::runtime_error ("Invalid Type Specifier.");
@@ -124,12 +136,14 @@ primitive_load_size (primitive_type type, const uint8_t *)
 
 #undef CASE_OF
 }
+
 uint64_t
 primitive_load_size (const uint8_t *buffer)
 {
   auto type = load_primitive_type (buffer);
   return primitive_load_size (type, buffer);
 }
+
 uint64_t
 primitive_save_size (primitive_value value)
 {
@@ -144,5 +158,6 @@ primitive_save_size (primitive_value value)
       primitive_value);                                                       \
   template primitive_value make_primitive<TY> (primitive_value_t<TY> value);
 
+// Instance generic functions for all values of primitive_type
 INSTANCE_MACRO (PRIM_INST);
 }
