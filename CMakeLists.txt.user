@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 6.0.2, 2023-04-30T09:51:38. -->
+<!-- Written by QtCreator 6.0.2, 2023-04-30T11:07:02. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -67,7 +67,14 @@
     <value type="bool" key="AutoTest.Framework.QtQuickTest">true</value>
     <value type="bool" key="AutoTest.Framework.QtTest">true</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="AutoTest.CheckStates"/>
+   <valuemap type="QVariantMap" key="AutoTest.CheckStates">
+    <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp:custom_test">Checked</value>
+    <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp:loading_tests">Checked</value>
+    <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp:string_test">Checked</value>
+    <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/loading_test.cpp:uint16_t_load">Checked</value>
+    <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/primitive_tests.cpp:get_set_test">Checked</value>
+    <value type="Qt::CheckState" key="1@/mnt/4c470445-3d5d-4a77-bbad-ba282ff5205a/Projects/evm/tests/primitive_tests.cpp:primitive_tests">Checked</value>
+   </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey"/>
@@ -83,6 +90,9 @@
     <valuelist type="QVariantList" key="ClangTools.SuppressedDiagnostics"/>
     <value type="bool" key="ClangTools.UseGlobalSettings">true</value>
    </valuemap>
+   <valuelist type="QVariantList" key="ProjectExplorer.Project.Environment">
+    <value type="QString">#&lt;VARIABLE&gt;=</value>
+   </valuelist>
   </valuemap>
  </data>
  <data>

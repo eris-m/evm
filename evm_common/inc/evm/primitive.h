@@ -63,6 +63,36 @@ std::optional<primitive_value_t<TYPE>> get_primitive (primitive_value value);
 template <primitive_type TYPE>
 primitive_value make_primitive (primitive_value_t<TYPE> value);
 
+primitive_type primitive_get_type (primitive_value val);
+
+/**
+ * @brief Loads a primitive value given the type.
+ * @param type Type of the primitive.
+ * @param buffer Buffer to load from.
+ */
+primitive_value load_primitive (primitive_type type, const uint8_t *buffer);
+/**
+ * @brief Loads a primitive value,
+ * using the first byte to determain the type.
+ * The other overload of @c load_primitive should be preferred if the type is
+ * known.
+ * @param buffer Buffer to load from.
+ */
+primitive_value load_primitive (const uint8_t *buffer);
+
+/**
+ * @brief Saves the given primitive into the buffer.
+ * @param value Value to save.
+ * @param buffer Buffer to save into.
+ * @param fat Whether or not the primitive should be a fat primitive,
+ * ie one that saves a type specifying byte along with the value.
+ */
+void save_primitive (primitive_value value, uint8_t *buffer, bool fat = false);
+
+//uint64_t primitive_load_size (primitive_type type, const uint8_t *buffer);
+//uint64_t primitive_load_size (const uint8_t *buffer);
+//uint64_t primitive_save_size (primitive_value value);
+
 }
 
 #endif // EVM_COMMON_VALUES_H_
