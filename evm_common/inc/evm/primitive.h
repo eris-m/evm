@@ -13,7 +13,7 @@ namespace evm
  * @brief This enum contains the different types, such as i8 (8-bit signed
  * integer).
  * @details The type names are fairly self explanatory, taking the form @c
- * <prefix><size>. A prefix of @c I means a signed integer, @c U an unsigned
+ * <prefix><size>_TYPE. A prefix of @c I means a signed integer, @c U an unsigned
  * integer, and @c F a floating point.
  *
  * Currently only numbers are implemented.
@@ -43,12 +43,19 @@ using primitive_value
 
 /**
  * @brief The associated type for the given @c primitive_type.
+ *
+ * This function is instanciated for each member of @c primitive_type, 
+ * and will produce a linker error if you try use an arbitrary integer.
  */
 template <primitive_type TYPE>
 using primitive_value_t = std::variant_alternative_t<TYPE, primitive_value>;
 
 /**
  * @brief Gets the value as an optional out of the @c primitive_value wrapper.
+ *
+ * This function is instanciated for each member of @c primitive_type, 
+ * and will produce a linker error if you try use an arbitrary integer.
+ *
  * @return An optional with value if the @c primitive_value contains the given
  * type, otherwise @c nullopt.
  */
@@ -58,6 +65,10 @@ std::optional<primitive_value_t<TYPE>> get_primitive (primitive_value value);
 /**
  * @brief Makes a primitive value out of the value.
  * Uses @c TYPE to figure out what variant to make.
+ *
+ * This function is instanciated for each member of @c primitive_type, 
+ * and will produce a linker error if you try use an arbitrary integer.
+ *
  * @tparam TYPE Type to make.
  * @return
  */
