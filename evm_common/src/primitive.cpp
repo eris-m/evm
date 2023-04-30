@@ -101,12 +101,6 @@ save_type (primitive_type type, uint8_t *buffer)
 void
 save_primitive (const primitive_value &value, uint8_t *buffer, bool fat)
 {
-  // Function to save value.
-  auto save_value = [buffer] (auto v) {
-    auto info = value_ls_info<typeof (v)> ();
-    info.save (v, buffer);
-  };
-
   auto type = primitive_get_type (value);
 
   // save type info if fat.
@@ -115,6 +109,12 @@ save_primitive (const primitive_value &value, uint8_t *buffer, bool fat)
       save_type (type, buffer);
       buffer++;
     }
+
+  // Function to save value.
+  auto save_value = [buffer] (auto v) {
+    auto info = value_ls_info<typeof (v)> ();
+    info.save (v, buffer);
+  };
 
   std::visit (save_value, value);
 }
@@ -141,26 +141,36 @@ uint64_t
 primitive_load_size (const uint8_t *buffer)
 {
   auto type = load_primitive_type (buffer);
-  return primitive_load_size (type, buffer);
+  return 1 + primitive_load_size (type, buffer);
 }
 
 uint64_t
-primitive_save_size (const primitive_value &value)
+primitive_save_size (const primitive_value &value, bool fat)
 {
   auto type = primitive_get_type (value);
   // passing in nullptr is fine, primitive_load_size doesn't use it.
-  return primitive_load_size (type, nullptr);
+  auto base = primitive_load_size (type, nullptr);
+
+  if (fat)
+    {
+      base += 1;
+    }
+
+  return base;
 }
 
 const std::string_view
 primitive_type_name (primitive_type t)
 {
-#define CASE_OF(T) case T: return #T;
+#define CASE_OF(T)                                                            \
+  case T:                                                                     \
+    return #T;
 
   switch (t)
     {
-    INSTANCE_MACRO(CASE_OF);
-    default: return "";
+      INSTANCE_MACRO (CASE_OF);
+    default:
+      return "";
     }
 
 #undef CASE_OF

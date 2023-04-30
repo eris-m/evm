@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include <evm/primitive.h>
 #include <cmath>
+#include <evm/primitive.h>
 
 TEST (primitive_tests, get_set_test)
 {
@@ -39,4 +39,42 @@ TEST (primitive_tests, thin_load_save_test)
 
   EXPECT_EQ (val_loaded, val);
   EXPECT_EQ (val2_loaded, val2);
+}
+
+TEST (primitive_tests, fat_load_save_test)
+{
+  evm::primitive_value vals[] = { evm::make_primitive<evm::F64_TYPE> (10.0),
+                                  evm::make_primitive<evm::I8_TYPE> (54),
+                                  evm::make_primitive<evm::U16_TYPE> (45000) };
+
+  constexpr auto vals_size = sizeof (vals);
+  constexpr auto vals_len = sizeof (vals) / sizeof (evm::primitive_value);
+
+  std::vector<uint8_t> buffer (vals_size + vals_len);
+
+  uint64_t offset = 0;
+
+  for (auto i = 0; i < vals_len; i++)
+    {
+      evm::save_primitive (vals[i], buffer.data () + offset, true);
+
+      auto size = evm::primitive_save_size (vals[i], true);
+      offset += size;
+    }
+
+  offset = 0;
+
+  for (auto i = 0; i < vals_len; i++)
+    {
+      auto data = buffer.data () + offset;
+      offset += evm::primitive_load_size (data);
+
+      auto primitive = evm::load_primitive (data);
+      auto type = evm::primitive_get_type (primitive);
+
+      auto &expected = vals[i];
+
+      EXPECT_EQ (type, evm::primitive_get_type (expected));
+      EXPECT_EQ (primitive, expected);
+    }
 }
