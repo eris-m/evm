@@ -1,0 +1,2 @@
+[workspace]
+members = ["evm_common"]
