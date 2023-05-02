@@ -1,3 +1,8 @@
+/** @file
+ *
+ * @brief This file contains @c @{ Loading functions @}
+ */
+
 #ifndef EVM_COMMON_LOADING_H_
 #define EVM_COMMON_LOADING_H_
 
