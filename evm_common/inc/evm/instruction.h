@@ -1,3 +1,8 @@
+/** @file
+ *
+ * @brief This header contains instructions and related functions.
+ */
+
 #ifndef EVM_COMMON_INSTRUCTION_H_
 #define EVM_COMMON_INSTRUCTION_H_
 
@@ -67,7 +72,13 @@ struct instruction
   instruction_args args;
 
   static instruction load (const uint8_t *buffer);
+  /**
+   * @brief Unimplemented
+   */
   static void save (const instruction &instr, uint8_t *buff);
+  /**
+   * @brief Unimplemented
+   */
   static ls_info<instruction> get_ls_info ();
 };
 
